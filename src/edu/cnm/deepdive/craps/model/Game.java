@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.craps.model;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -11,6 +12,8 @@ public class Game {
   private Random rng;
   // way to keep a roll of a pair of dice
   private List<int[]> rolls;
+  private long wins;
+  private long losses;
 
   public Game(Random rng){
 
@@ -49,6 +52,12 @@ public class Game {
     //keep rolling until i have a win or loss
     while(state != State.WIN && state != State.LOSS){
       roll();
+      if (state == State.WIN){
+
+        wins++;
+      }else if (state == State.LOSS){
+        losses++;
+      }
     }
     return state;
 
@@ -63,6 +72,24 @@ public class Game {
   }
 
   public List<int[]> getRolls() {
-    return new LinkedList<int[]>(rolls);//return a copy of my list
+    List<int[]> copy = new LinkedList<>();//return a copy of my list
+    for(int[] roll : rolls){
+
+      copy.add(Arrays.copyOf(roll,roll.length));
+    }
+    return copy;
   }
-}
+
+  public long getWins() {
+    return wins;
+  }
+
+
+
+  public long getLosses() {
+    return losses;
+  }
+
+
+  }
+
